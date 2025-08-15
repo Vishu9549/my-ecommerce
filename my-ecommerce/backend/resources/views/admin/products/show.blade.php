@@ -1,0 +1,129 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white border-bottom">
+            <h4 class="mb-0">Product Details</h4>
+        </div>
+        <div class="card-body">
+
+            {{-- Row 1: Basic Info --}}
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Name:</strong> {{ $product->name }}</div>
+                <div class="col-md-6">
+                    <strong>Status:</strong>
+                    <span class="badge badge-{{ $product->status ? 'success' : 'secondary' }}">
+                        {{ $product->status ? 'Active' : 'Inactive' }}
+                    </span>
+                </div>
+            </div>
+
+            {{-- Row 2: Featured, SKU, Quantity --}}
+            <div class="row mb-3">
+                <div class="col-md-4"><strong>Is Featured:</strong> {{ $product->is_featured ? 'Yes' : 'No' }}</div>
+                <div class="col-md-4"><strong>SKU:</strong> {{ $product->sku }}</div>
+                <div class="col-md-4"><strong>Qty:</strong> {{ $product->qty }}</div>
+            </div>
+
+            {{-- Row 3: Stock status, Weight --}}
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Stock Status:</strong> {{ ucfirst($product->stock_status) }}</div>
+                <div class="col-md-6"><strong>Weight:</strong> {{ $product->weight }} kg</div>
+            </div>
+
+            {{-- Row 4: Price & Special Price --}}
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Price:</strong> ₹{{ $product->price }}</div>
+                <div class="col-md-6"><strong>Special Price:</strong> ₹{{ $product->special_price ?? '-' }}</div>
+            </div>
+
+            {{-- Row 5: Special Price Date Range --}}
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Special Price From:</strong> {{ $product->special_price_from ?? '-' }}</div>
+                <div class="col-md-6"><strong>Special Price To:</strong> {{ $product->special_price_to ?? '-' }}</div>
+            </div>
+
+            {{-- Row 6: URL Key --}}
+            <div class="row mb-3">
+                <div class="col-md-12"><strong>URL Key:</strong> {{ $product->url_key }}</div>
+            </div>
+
+            {{-- Row 7: Short Description --}}
+            <div class="row mb-3">
+                <div class="col-md-12"><strong>Short Description:</strong> {!! $product->short_description !!}</div>
+            </div>
+
+            {{-- Row 8: Description --}}
+            <div class="row mb-3">
+                <div class="col-md-12"><strong>Description:</strong> {!! $product->description !!}</div>
+            </div>
+
+            {{-- Row 9: Meta Info --}}
+            <div class="row mb-3">
+                <div class="col-md-4"><strong>Meta Title:</strong> {{ $product->meta_title }}</div>
+                <div class="col-md-4"><strong>Meta Tag:</strong> {{ $product->meta_tag }}</div>
+                <div class="col-md-4"><strong>Meta Description:</strong> {{ $product->meta_description }}</div>
+            </div>
+
+            {{-- Row 10: Categories --}}
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <strong>Categories:</strong>
+                    <ul>
+                        @foreach($product->categories as $category)
+                            <li>{{ $category->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            {{-- Row 11: Attributes --}}
+            @if($product->attributeValues)
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <strong>Attributes:</strong>
+                    <ul>
+                        @foreach($product->attributeValues as $value)
+                            <li><strong>{{ $value->attribute->attribute_name }}:</strong> {{ $value->value_name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            @endif
+
+            {{-- Row 12: Related Products --}}
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <strong>Related Products:</strong>
+                    <ul>
+                        @foreach($product->relatedProducts as $related)
+                            <li>{{ $related->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            {{-- Row 13: Images --}}
+            <div class="row mb-3">
+                @if($product->image)
+                <div class="col-md-6">
+                    <strong>Main Image:</strong><br>
+                    <img src="{{ asset('uploads/product/' . $product->image) }}" alt="Main Image" width="200">
+                </div>
+                @endif
+
+                @if($product->thumbnail)
+                <div class="col-md-6">
+                    <strong>Thumbnail:</strong><br>
+                    <img src="{{ asset('uploads/product/' . $product->thumbnail) }}" alt="Thumbnail" width="100">
+                </div>
+                @endif
+            </div>
+
+            {{-- Back Button --}}
+            <a href="{{ route('products.index') }}" class="btn btn-secondary mt-4">← Back to List</a>
+        </div>
+    </div>
+</div>
+@endsection

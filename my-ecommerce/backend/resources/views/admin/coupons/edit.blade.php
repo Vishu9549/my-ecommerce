@@ -1,0 +1,54 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="container">
+    <h3>Edit Coupon</h3>
+
+    <form action="{{ route('coupons.update', $coupon->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control" value="{{ old('title', $coupon->title) }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Coupon Code</label>
+                    <input type="text" name="coupon_code" class="form-control" value="{{ old('coupon_code', $coupon->coupon_code) }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Status</label>
+                    <select name="status" class="form-control">
+                        <option value="1" {{ $coupon->status == '1' ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $coupon->status == '0' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label>Valid From</label>
+                    <input type="date" name="valid_from" class="form-control" value="{{ old('valid_from', $coupon->valid_from) }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Valid To</label>
+                    <input type="date" name="valid_to" class="form-control" value="{{ old('valid_to', $coupon->valid_to) }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Discount Amount</label>
+                    <input type="number" name="discount_amount" class="form-control" value="{{ old('discount_amount', $coupon->discount_amount) }}">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="{{ route('coupons.index') }}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+@endsection

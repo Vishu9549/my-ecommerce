@@ -1,0 +1,48 @@
+// Color Palette
+$primary: #3b5d50;
+$secondary: #f9bf29;
+$white: #ffffff;
+$black: #000000;
+$light: #f8f9fa;
+$dark: #212529;
+$gray: #6c757d;
+$gray-light: #dee2e6;
+$body-bg: #f5f5f5;
+
+// Font Settings
+$font-family-base: 'Poppins', sans-serif;
+$font-size-base: 1rem; // 16px
+$line-height-base: 1.5;
+
+// Border Radius
+$border-radius: 0.5rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 1rem;
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+);
+
+// Buttons
+$btn-padding-y: 0.5rem;
+$btn-padding-x: 1.25rem;
+$btn-border-radius: $border-radius;
+
+// Shadows
+$box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+// Navbar
+$navbar-bg: $primary;
+$navbar-color: $white;
+$navbar-hover-color: $secondary;
+
+// Footer
+$footer-bg: $black;
+$footer-color: $white;
