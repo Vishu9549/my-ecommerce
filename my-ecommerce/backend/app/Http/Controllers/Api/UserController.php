@@ -37,7 +37,7 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
         $remember = $request->input('remember', false);
 
-        if (!Auth::attempt($credentials , $remember)) {
+        if (!Auth::attempt($credentials, $remember)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
@@ -52,29 +52,29 @@ class UserController extends Controller
     }
 
     public function update(Request $request)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        'password' => 'nullable|string|min:6|confirmed', // confirmed => confirm_password match karega
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
 
-    $user->name = $request->name;
-    $user->email = $request->email;
+        $user->name = $request->name;
+        $user->email = $request->email;
 
-    if (!empty($request->password)) {
-        $user->password = bcrypt($request->password);
+        if (!empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user
+        ]);
     }
-
-    $user->save();
-
-    return response()->json([
-        'message' => 'Profile updated successfully',
-        'user' => $user
-    ]);
-}
 
     // ✅ Logout function
     public function logout(Request $request)
@@ -84,13 +84,11 @@ class UserController extends Controller
         return response()->json(['message' => 'Logged out successfully']);
     }
 
-    // ✅ Refresh Token function
     public function refreshToken(Request $request)
     {
-        // Purana token delete karo
+
         $request->user()->currentAccessToken()->delete();
 
-        // Naya token create karo
         $newToken = $request->user()->createToken('Api_token')->plainTextToken;
 
         return response()->json([

@@ -7,7 +7,6 @@
         @method('PUT')
 
         <div class="row">
-            <!-- Left Column -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     <label>Product Name</label>
@@ -79,7 +78,6 @@
                 </div>
             </div>
 
-            <!-- Right Column -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     <label>Short Description</label>

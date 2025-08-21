@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../components/CartContext';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useCart } from "../components/CartContext";
 
 const ProductDetail = () => {
   const { slug } = useParams();
@@ -14,14 +14,14 @@ const ProductDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/product/${slug}`,{
-         headers: {
-        Authorization: `Bearer ${token}`
-      },
+      .get(`http://127.0.0.1:8000/api/product/${slug}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      
+
       .then((response) => setProduct(response.data))
-      .catch((error) => console.error('Error fetching product:', error));
+      .catch((error) => console.error("Error fetching product:", error));
   }, [slug]);
 
   const handleOptionChange = (attributeName, value) => {
@@ -32,47 +32,50 @@ const ProductDetail = () => {
   };
 
   const handleAddToCart = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const formattedOptions = Object.entries(selectedOptions).map(
-      ([attribute, value]) => ({
-        attribute,
-        value,
-      })
-    );
+    try {
+      const token = localStorage.getItem("token");
+      const formattedOptions = Object.entries(selectedOptions).map(
+        ([attribute, value]) => ({
+          attribute,
+          value,
+        })
+      );
 
-    const payload = {
-      product_id: product.id,
-      name: product.name,
-      sku: product.sku,
-      price: product.special_price ?? product.price,
-      qty: 1,
-      row_total: (product.special_price ?? product.price) * 1,
-      custom_option: formattedOptions, // ✅ Send as array of objects
-    };
+      const payload = {
+        product_id: product.id,
+        name: product.name,
+        sku: product.sku,
+        price: product.special_price ?? product.price,
+        qty: 1,
+        row_total: (product.special_price ?? product.price) * 1,
+        custom_option: formattedOptions,
+      };
 
-    const response = await axios.post(
-      'http://localhost:8000/api/cart/add',
-       payload,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
+      const response = await axios.post(
+        "http://localhost:8000/api/cart/add",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
 
-    addToCart({ ...product, qty: 1 });
-    alert('Product added to cart!');
-  } catch (error) {
-    console.error('Error adding to cart:', error.response?.data || error.message);
-    alert('Failed to add to cart');
-  }
-};
+      addToCart({ ...product, qty: 1 });
+      alert("Product added to cart!");
+    } catch (error) {
+      console.error(
+        "Error adding to cart:",
+        error.response?.data || error.message
+      );
+      alert("Failed to add to cart");
+    }
+  };
 
   if (!product) return <div className="text-center mt-5">Loading...</div>;
 
-  const imageUrl = product.image?.startsWith('http')
+  const imageUrl = product.image?.startsWith("http")
     ? product.image
     : `http://127.0.0.1:8000/uploads/product/${product.image}`;
 
@@ -85,11 +88,10 @@ const ProductDetail = () => {
             src={imageUrl}
             alt={product.name}
             className="img-fluid rounded"
-            style={{ maxHeight: '450px', objectFit: 'contain' }}
+            style={{ maxHeight: "450px", objectFit: "contain" }}
           />
         </div>
 
-        {/* Right: Product Info */}
         <div className="col-md-6">
           <h2 className="fw-bold">{product.name}</h2>
           <p className="text-muted">SKU: {product.sku}</p>
@@ -104,8 +106,10 @@ const ProductDetail = () => {
           )}
 
           <div className="mt-3">
-            <strong>Stock Status:</strong>{' '}
-            {product.stock_status === 'in_stock' ? '✅ In Stock' : '❌ Out of Stock'}
+            <strong>Stock Status:</strong>{" "}
+            {product.stock_status === "in_stock"
+              ? "✅ In Stock"
+              : "❌ Out of Stock"}
           </div>
 
           <div className="mt-3">
@@ -114,10 +118,9 @@ const ProductDetail = () => {
           </div>
 
           <div className="mt-3">
-            <strong>Weight:</strong> {product.weight ?? 'N/A'} kg
+            <strong>Weight:</strong> {product.weight ?? "N/A"} kg
           </div>
 
-          {/* Attributes */}
           {product.attributes?.length > 0 && (
             <div className="mt-4">
               <strong>Choose Options:</strong>
@@ -126,7 +129,9 @@ const ProductDetail = () => {
                   <label className="form-label">{attr.name}</label>
                   <select
                     className="form-select"
-                    onChange={(e) => handleOptionChange(attr.name, e.target.value)}
+                    onChange={(e) =>
+                      handleOptionChange(attr.name, e.target.value)
+                    }
                     defaultValue=""
                   >
                     <option value="" disabled>
@@ -152,13 +157,12 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* Related Products */}
       {product.related_products?.length > 0 && (
         <div className="related-products mt-5">
           <h4 className="mb-4">Related Products</h4>
           <div className="row">
             {product.related_products.map((related, index) => {
-              const relatedImage = related.image?.startsWith('http')
+              const relatedImage = related.image?.startsWith("http")
                 ? related.image
                 : `http://127.0.0.1:8000/uploads/product/${related.image}`;
               return (
@@ -168,7 +172,7 @@ const ProductDetail = () => {
                       src={relatedImage}
                       alt={related.name}
                       className="card-img-top"
-                      style={{ height: '200px', objectFit: 'cover' }}
+                      style={{ height: "200px", objectFit: "cover" }}
                     />
                     <div className="card-body d-flex flex-column">
                       <h5 className="card-title">{related.name}</h5>

@@ -20,11 +20,10 @@ class Attribute extends Model
         'is_variant' => 'boolean',
     ];
 
-    // 🔁 One-to-Many Relationship: Attribute has many Values
     public function values()
     {
         return $this->hasMany(AttributeValue::class);
     }
-   
+
 
 }

@@ -6,17 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
 
-class PageController extends Controller {
-    public function index() {
+class PageController extends Controller
+{
+    public function index()
+    {
         $pages = Page::latest()->get();
         return view('admin.pages.index', compact('pages'));
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin.pages.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'heading' => 'required|string|max:255',
@@ -37,12 +41,14 @@ class PageController extends Controller {
         return redirect()->route('pages.index')->with('success', 'Page created successfully.');
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $page = Page::findOrFail($id);
         return view('admin.pages.edit', compact('page'));
     }
 
-    public function update(Request $request, Page $page) {
+    public function update(Request $request, Page $page)
+    {
         $data = $request->validate([
             'title' => 'required',
             'heading' => 'required',
@@ -63,7 +69,8 @@ class PageController extends Controller {
         return redirect()->route('pages.index')->with('success', 'Page updated successfully.');
     }
 
-    public function destroy(Page $page) {
+    public function destroy(Page $page)
+    {
         $page->delete();
         return redirect()->back()->with('success', 'Page deleted successfully.');
     }

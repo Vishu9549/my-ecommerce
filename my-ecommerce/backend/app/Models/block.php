@@ -23,7 +23,6 @@ class Block extends Model
         'features',
     ];
 
-    // 👇 Only cast features to array if it's a JSON array
     protected $casts = [
         'features' => 'array',
         'image' => 'array',

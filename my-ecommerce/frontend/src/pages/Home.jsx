@@ -1,28 +1,28 @@
-import React from 'react'
-import HeroSection from '../components/HeroSection'
-import WhyChooseUs from '../components/WhyChooseUs'
-import WeHelpSection from '../components/WeHelpSection'
-import PopularProduct from '../components/PopularProduct'
-import TestimonialSlider from '../components/TestimonialSlider'
-import BlogSection from '../components/BlogSection'
-import ProductSection from '../components/ProductSection'
+import React from "react";
+import HeroSection from "../components/HeroSection";
+import WhyChooseUs from "../components/WhyChooseUs";
+import WeHelpSection from "../components/WeHelpSection";
+import PopularProduct from "../components/PopularProduct";
+import TestimonialSlider from "../components/TestimonialSlider";
+import BlogSection from "../components/BlogSection";
+import ProductSection from "../components/ProductSection";
 
 function Home() {
   return (
     <div>
-       <HeroSection 
+      <HeroSection
         title="Modern Interior"
         subtitle="Design Studio"
         description="Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique."
       />
-      <ProductSection/>
+      <ProductSection />
       <WhyChooseUs />
       <WeHelpSection />
-      <PopularProduct/>
-      <TestimonialSlider />
+      <PopularProduct />
+      <TestimonialSlider />F
       <BlogSection />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;

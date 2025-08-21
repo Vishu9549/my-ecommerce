@@ -7,8 +7,6 @@
             <h4 class="mb-0">Product Details</h4>
         </div>
         <div class="card-body">
-
-            {{-- Row 1: Basic Info --}}
             <div class="row mb-3">
                 <div class="col-md-6"><strong>Name:</strong> {{ $product->name }}</div>
                 <div class="col-md-6">
@@ -19,54 +17,44 @@
                 </div>
             </div>
 
-            {{-- Row 2: Featured, SKU, Quantity --}}
             <div class="row mb-3">
                 <div class="col-md-4"><strong>Is Featured:</strong> {{ $product->is_featured ? 'Yes' : 'No' }}</div>
                 <div class="col-md-4"><strong>SKU:</strong> {{ $product->sku }}</div>
                 <div class="col-md-4"><strong>Qty:</strong> {{ $product->qty }}</div>
             </div>
-
-            {{-- Row 3: Stock status, Weight --}}
             <div class="row mb-3">
                 <div class="col-md-6"><strong>Stock Status:</strong> {{ ucfirst($product->stock_status) }}</div>
                 <div class="col-md-6"><strong>Weight:</strong> {{ $product->weight }} kg</div>
             </div>
 
-            {{-- Row 4: Price & Special Price --}}
             <div class="row mb-3">
                 <div class="col-md-6"><strong>Price:</strong> ₹{{ $product->price }}</div>
                 <div class="col-md-6"><strong>Special Price:</strong> ₹{{ $product->special_price ?? '-' }}</div>
             </div>
 
-            {{-- Row 5: Special Price Date Range --}}
             <div class="row mb-3">
                 <div class="col-md-6"><strong>Special Price From:</strong> {{ $product->special_price_from ?? '-' }}</div>
                 <div class="col-md-6"><strong>Special Price To:</strong> {{ $product->special_price_to ?? '-' }}</div>
             </div>
 
-            {{-- Row 6: URL Key --}}
             <div class="row mb-3">
                 <div class="col-md-12"><strong>URL Key:</strong> {{ $product->url_key }}</div>
             </div>
 
-            {{-- Row 7: Short Description --}}
             <div class="row mb-3">
                 <div class="col-md-12"><strong>Short Description:</strong> {!! $product->short_description !!}</div>
             </div>
 
-            {{-- Row 8: Description --}}
             <div class="row mb-3">
                 <div class="col-md-12"><strong>Description:</strong> {!! $product->description !!}</div>
             </div>
 
-            {{-- Row 9: Meta Info --}}
             <div class="row mb-3">
                 <div class="col-md-4"><strong>Meta Title:</strong> {{ $product->meta_title }}</div>
                 <div class="col-md-4"><strong>Meta Tag:</strong> {{ $product->meta_tag }}</div>
                 <div class="col-md-4"><strong>Meta Description:</strong> {{ $product->meta_description }}</div>
             </div>
 
-            {{-- Row 10: Categories --}}
             <div class="row mb-3">
                 <div class="col-md-12">
                     <strong>Categories:</strong>
@@ -78,7 +66,6 @@
                 </div>
             </div>
 
-            {{-- Row 11: Attributes --}}
             @if($product->attributeValues)
             <div class="row mb-3">
                 <div class="col-md-12">
@@ -92,7 +79,6 @@
             </div>
             @endif
 
-            {{-- Row 12: Related Products --}}
             <div class="row mb-3">
                 <div class="col-md-12">
                     <strong>Related Products:</strong>
@@ -104,7 +90,6 @@
                 </div>
             </div>
 
-            {{-- Row 13: Images --}}
             <div class="row mb-3">
                 @if($product->image)
                 <div class="col-md-6">
@@ -121,7 +106,6 @@
                 @endif
             </div>
 
-            {{-- Back Button --}}
             <a href="{{ route('products.index') }}" class="btn btn-secondary mt-4">← Back to List</a>
         </div>
     </div>

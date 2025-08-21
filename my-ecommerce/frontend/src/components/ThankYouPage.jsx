@@ -1,11 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function ThankYouPage() {
   return (
     <>
-      
-      {/* Thank You Message */}
       <div className="untree_co-section">
         <div className="container">
           <div className="row">
@@ -40,7 +38,9 @@ export default function ThankYouPage() {
                 </svg>
               </span>
               <h2 className="display-3 text-black">Thank you!</h2>
-              <p className="lead mb-5">Your order was successfully completed.</p>
+              <p className="lead mb-5">
+                Your order was successfully completed.
+              </p>
               <p>
                 <Link to="/shop" className="btn btn-sm btn-outline-dark">
                   Back to Shop

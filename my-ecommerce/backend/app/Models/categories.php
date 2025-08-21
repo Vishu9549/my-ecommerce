@@ -34,28 +34,23 @@ class Categories extends Model
         });
     }
 
-    // 🔁 Relationship: Parent Category
     public function parent()
     {
         return $this->belongsTo(Categories::class, 'parent_id');
     }
 
-    // 🔁 Relationship: Child Categories
     public function children()
     {
         return $this->hasMany(Categories::class, 'parent_id');
     }
 
-    // 🔁 Many-to-Many: Products
-   
-    // 🖼️ Image URL accessor
     public function getImageUrlAttribute()
     {
         return $this->image ? asset('storage/categories/' . $this->image) : null;
     }
     public function products()
-{
-    return $this->belongsToMany(Product::class, 'categories_product', 'category_id', 'product_id');
-}
+    {
+        return $this->belongsToMany(Product::class, 'categories_product', 'category_id', 'product_id');
+    }
 
 }

@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class page extends Model
 {
     use HasFactory;
-       protected $fillable = [
+    protected $fillable = [
         'title',
         'heading',
         'ordering',
         'url_key',
         'status',
         'description',
-         'image',
+        'image',
     ];
 }

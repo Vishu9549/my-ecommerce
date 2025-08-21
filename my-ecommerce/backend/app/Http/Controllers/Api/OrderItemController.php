@@ -8,20 +8,17 @@ use App\Models\OrderItem;
 
 class OrderItemController extends Controller
 {
-    // Get all order items
     public function index(Request $request)
-{
-    $query = OrderItem::with(['order', 'product']);
+    {
+        $query = OrderItem::with(['order', 'product']);
 
-    if ($request->has('order_id')) {
-        $query->where('order_id', $request->order_id);
+        if ($request->has('order_id')) {
+            $query->where('order_id', $request->order_id);
+        }
+
+        return response()->json($query->get());
     }
 
-    return response()->json($query->get());
-}
-
-
-    // Store a new order item
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -39,14 +36,12 @@ class OrderItemController extends Controller
         return response()->json(['message' => 'Order item created successfully', 'item' => $item], 201);
     }
 
-    // Show a specific order item
     public function show($id)
     {
         $item = OrderItem::with(['order', 'product'])->findOrFail($id);
         return response()->json($item);
     }
 
-    // Update an order item
     public function update(Request $request, $id)
     {
         $item = OrderItem::findOrFail($id);
@@ -66,7 +61,6 @@ class OrderItemController extends Controller
         return response()->json(['message' => 'Order item updated successfully', 'item' => $item]);
     }
 
-    // Delete an order item
     public function destroy($id)
     {
         $item = OrderItem::findOrFail($id);

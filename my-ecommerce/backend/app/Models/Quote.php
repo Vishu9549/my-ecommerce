@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Quote extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
+    protected $fillable = [
         'cart_id',
         'user_id',
         'name',
@@ -25,12 +25,9 @@ class Quote extends Model
         'total',
     ];
 
-
     public function items()
     {
         return $this->hasMany(QuotesItem::class, 'quote_id');
     }
-
-   
 
 }

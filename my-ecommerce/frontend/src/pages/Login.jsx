@@ -6,18 +6,18 @@ import { useCart } from "../components/CartContext";
 
 export default function LoginForm({ onLoginSuccess }) {
   const { fetchCartItems } = useCart();
-  const [isLogin, setIsLogin] = useState(true); // Toggle between Login & Register
+  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
-  const handleChange = e =>
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isLogin && formData.password !== formData.confirmPassword) {
@@ -32,18 +32,20 @@ export default function LoginForm({ onLoginSuccess }) {
 
       const payload = isLogin
         ? { email: formData.email, password: formData.password }
-        : { name: formData.name, email: formData.email, password: formData.password };
+        : {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          };
 
       const res = await axios.post(url, payload, { withCredentials: true });
 
       if (isLogin) {
-        // Save user and token to localStorage
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        localStorage.setItem("token", res.data.token); // <--- important!
+        localStorage.setItem("token", res.data.token);
 
         onLoginSuccess(res.data.user);
 
-        // Fetch cart items immediately
         fetchCartItems();
       } else {
         alert("Registration successful! Please log in.");
@@ -120,14 +122,22 @@ export default function LoginForm({ onLoginSuccess }) {
           {isLogin ? (
             <>
               Don't have an account?{" "}
-              <Button variant="link" className="p-0" onClick={() => setIsLogin(false)}>
+              <Button
+                variant="link"
+                className="p-0"
+                onClick={() => setIsLogin(false)}
+              >
                 Sign Up
               </Button>
             </>
           ) : (
             <>
               Already have an account?{" "}
-              <Button variant="link" className="p-0" onClick={() => setIsLogin(true)}>
+              <Button
+                variant="link"
+                className="p-0"
+                onClick={() => setIsLogin(true)}
+              >
                 Login
               </Button>
             </>

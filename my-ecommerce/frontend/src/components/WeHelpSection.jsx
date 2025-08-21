@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../assets/scss/style.scss';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../assets/scss/style.scss";
 
 const WeHelpSection = () => {
   const [helpData, setHelpData] = useState(null);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/blocks/we_help_you')
+    axios
+      .get("http://127.0.0.1:8000/api/blocks/we_help_you")
       .then((response) => {
         if (response.data) {
           setHelpData(response.data);
         }
       })
       .catch((error) => {
-        console.error('Error fetching help section:', error);
+        console.error("Error fetching help section:", error);
       });
   }, []);
 
@@ -30,26 +31,25 @@ const WeHelpSection = () => {
             <div className="row g-3">
               <div className="col-6">
                 <img
-  src={helpData.image[0]}
-  alt="Grid 1"
-  className="img-fluid rounded shadow"
-  style={{ height: '360px', objectFit: 'cover', width: '100%' }}
-/>
-
+                  src={helpData.image[0]}
+                  alt="Grid 1"
+                  className="img-fluid rounded shadow"
+                  style={{ height: "360px", objectFit: "cover", width: "100%" }}
+                />
               </div>
               <div className="col-6 d-flex flex-column gap-3">
                 <img
-  src={helpData.image[1]}
-  alt="Grid 2"
-  className="img-fluid rounded shadow"
-  style={{ height: '174px', objectFit: 'cover', width: '100%' }}
-/>
-<img
-  src={helpData.image[2]}
-  alt="Grid 3"
-  className="img-fluid rounded shadow"
-  style={{ height: '174px', objectFit: 'cover', width: '100%' }}
-/>
+                  src={helpData.image[1]}
+                  alt="Grid 2"
+                  className="img-fluid rounded shadow"
+                  style={{ height: "174px", objectFit: "cover", width: "100%" }}
+                />
+                <img
+                  src={helpData.image[2]}
+                  alt="Grid 3"
+                  className="img-fluid rounded shadow"
+                  style={{ height: "174px", objectFit: "cover", width: "100%" }}
+                />
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ const WeHelpSection = () => {
                 href={helpData.button_link || "#"}
                 className="btn btn-dark px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"
               >
-                {helpData.button_text || 'Explore'}
+                {helpData.button_text || "Explore"}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"

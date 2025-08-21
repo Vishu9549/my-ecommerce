@@ -46,9 +46,10 @@ const Checkout = () => {
         const res = await fetch("http://localhost:8000/api/quotes", {
           method: "GET",
           credentials: "include",
-          headers: { "Content-Type": "application/json" ,
-                   "Authorization": `Bearer ${token}`
-        },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
         const data = await res.json();
 
@@ -86,12 +87,12 @@ const Checkout = () => {
 
   const handlePlaceOrder = async () => {
     try {
-      // 1️⃣ Update quote with billing info
       const quoteResponse = await fetch("http://localhost:8000/api/quotes", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" ,
-                   "Authorization": `Bearer ${token}`
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: `${formData.fname} ${formData.lname}`,
@@ -115,17 +116,16 @@ const Checkout = () => {
         return;
       }
 
-      // 2️⃣ Place Order with payment, shipping method & shipping address
       const orderRes = await fetch("http://localhost:8000/api/place-order", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-         },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           payment_method: formData.payment_method,
           shipping_method: formData.shipping_method,
-
           shipping_name: `${formData.shipping.fname} ${formData.shipping.lname}`,
           shipping_email: formData.shipping.email,
           shipping_phone: formData.shipping.phone,
@@ -156,7 +156,6 @@ const Checkout = () => {
     <div className="container my-5">
       <h2 className="mb-4 text-center">Checkout</h2>
       <div className="row">
-        {/* Billing Info */}
         <div className="col-md-6">
           <div className="card p-4 shadow-sm mb-4">
             <h4 className="mb-3">Billing Information</h4>
@@ -175,7 +174,9 @@ const Checkout = () => {
               ].map(([label, name], i) => (
                 <div
                   key={i}
-                  className={`col-md-${["state", "zip"].includes(name) ? 6 : 12} mb-3`}
+                  className={`col-md-${
+                    ["state", "zip"].includes(name) ? 6 : 12
+                  } mb-3`}
                 >
                   <label>{label}</label>
                   <input
@@ -191,7 +192,6 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* Shipping Info */}
         <div className="col-md-6">
           <div className="card p-4 shadow-sm mb-4">
             <h4 className="mb-3">Shipping Information</h4>
@@ -210,7 +210,9 @@ const Checkout = () => {
               ].map(([label, name], i) => (
                 <div
                   key={i}
-                  className={`col-md-${["state", "zip"].includes(name) ? 6 : 12} mb-3`}
+                  className={`col-md-${
+                    ["state", "zip"].includes(name) ? 6 : 12
+                  } mb-3`}
                 >
                   <label>{label}</label>
                   <input
@@ -227,7 +229,6 @@ const Checkout = () => {
         </div>
       </div>
 
-      {/* Payment, Shipping Method, Notes */}
       <div className="row">
         <div className="col-md-6">
           <div className="card p-4 shadow-sm mb-4">
@@ -269,7 +270,6 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* Order Summary */}
         <div className="col-md-6">
           <div className="card p-4 shadow-sm mb-4">
             <h4 className="mb-3">Order Summary</h4>

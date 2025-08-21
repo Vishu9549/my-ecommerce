@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useCart } from '../components/CartContext';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useCart } from "../components/CartContext";
+import axios from "axios";
 
 const ProductSection = () => {
   const { addToCart } = useCart();
@@ -8,13 +8,14 @@ const ProductSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/products/featured')
+    axios
+      .get("http://127.0.0.1:8000/api/products/featured")
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Error fetching featured products:', err);
+        console.error("Error fetching featured products:", err);
         setLoading(false);
       });
   }, []);
@@ -22,25 +23,26 @@ const ProductSection = () => {
   return (
     <section className="product-section py-5 bg-light">
       <div className="container">
-        {/* Make row a flex container to align child columns equally */}
         <div className="row g-4 align-items-stretch">
-          
-          {/* Left Description with full height */}
           <div className="col-lg-3 d-flex">
             <div className="bg-white p-4 shadow-sm rounded w-100 d-flex flex-column justify-content-between">
               <div>
-                <h2 className="section-title mb-3 fw-bold">Crafted with excellent material.</h2>
+                <h2 className="section-title mb-3 fw-bold">
+                  Crafted with excellent material.
+                </h2>
                 <p className="text-muted mb-4">
-                  Explore our premium selection of furniture crafted with care and style.
+                  Explore our premium selection of furniture crafted with care
+                  and style.
                 </p>
               </div>
-              <a href="/shop" className="btn btn-dark px-4 py-2 rounded-pill mt-auto">
+              <a
+                href="/shop"
+                className="btn btn-dark px-4 py-2 rounded-pill mt-auto"
+              >
                 Explore
               </a>
             </div>
           </div>
-
-          {/* Product Cards */}
           <div className="col-lg-9">
             <div className="row g-4">
               {loading ? (
@@ -56,18 +58,27 @@ const ProductSection = () => {
                           src={
                             product.image?.startsWith("http")
                               ? product.image
-                              : `http://127.0.0.1:8000/${product.image.replace(/^\/+/, '')}`
+                              : `http://127.0.0.1:8000/${product.image.replace(
+                                  /^\/+/,
+                                  ""
+                                )}`
                           }
                           alt={product.product_name}
                           className="img-fluid mb-3"
-                          style={{ objectFit: "cover", height: "100%", width: "100%" }}
+                          style={{
+                            objectFit: "cover",
+                            height: "100%",
+                            width: "100%",
+                          }}
                           onError={(e) => {
                             e.target.src = "/images/default-product.png";
                           }}
                         />
                       </div>
 
-                      <h5 className="product-title mb-1">{product.product_name}</h5>
+                      <h5 className="product-title mb-1">
+                        {product.product_name}
+                      </h5>
                       <strong className="product-price d-block mb-3">
                         ₹{product.price}
                       </strong>
@@ -81,7 +92,10 @@ const ProductSection = () => {
                               price: product.price,
                               image: product.image?.startsWith("http")
                                 ? product.image
-                                : `http://127.0.0.1:8000/storage/${product.image.replace(/^\/+/, "")}`,
+                                : `http://127.0.0.1:8000/storage/${product.image.replace(
+                                    /^\/+/,
+                                    ""
+                                  )}`,
                             })
                           }
                           className="btn btn-outline-dark"
@@ -96,7 +110,11 @@ const ProductSection = () => {
                           <img
                             src="/images/cross.svg"
                             alt="Add to cart"
-                            style={{ width: "20px", height: "20px", filter: "brightness(0)" }}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              filter: "brightness(0)",
+                            }}
                           />
                         </button>
                       </div>

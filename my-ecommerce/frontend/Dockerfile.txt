@@ -1,0 +1,26 @@
+# Step 1: Node.js base image use karo
+FROM node:20
+
+# Step 2: Working directory set karo
+WORKDIR /app
+
+# Step 3: Package files copy karo
+COPY package*.json ./
+
+# Step 4: Dependencies install karo
+RUN npm install
+
+# Step 5: React/Vite app ka code copy karo
+COPY . .
+
+# Step 6: Production build create karo
+RUN npm run build
+
+# Step 7: Serve karne ke liye "serve" package install karo
+RUN npm install -g serve
+
+# Step 8: Port expose karo
+EXPOSE 3000
+
+# Step 9: Container run karne par build folder serve karo
+CMD ["serve", "-s", "dist", "-l", "3000"]

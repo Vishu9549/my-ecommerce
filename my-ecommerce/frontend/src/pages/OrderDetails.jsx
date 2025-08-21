@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Table, Image, Spinner, Alert } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Image,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -11,7 +19,7 @@ const OrderDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // token get from storage
+    const token = localStorage.getItem("token");
     if (!token) {
       setError("You must be logged in to view this order");
       setLoading(false);
@@ -22,12 +30,15 @@ const OrderDetails = () => {
 
     const fetchOrderDetails = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/orderitems?order_id=${orderId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/orderitems?order_id=${orderId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await res.json();
 
@@ -51,53 +62,61 @@ const OrderDetails = () => {
     fetchOrderDetails();
   }, [orderId]);
 
-  if (loading) return <Spinner animation="border" className="d-block mx-auto mt-5" />;
+  if (loading)
+    return <Spinner animation="border" className="d-block mx-auto mt-5" />;
   if (error) return <Alert variant="danger">{error}</Alert>;
   if (!orderInfo) return <Alert variant="warning">Order not found</Alert>;
 
   const downloadInvoice = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Please login to download invoice");
-    return;
-  }
-
-  fetch(`http://127.0.0.1:8000/api/orders/${orderId}/invoice`, {
-    method: "GET",
-    headers: {
-      Accept: "application/pdf",
-      Authorization: `Bearer ${token}`
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login to download invoice");
+      return;
     }
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to download invoice");
-      return res.blob();
-    })
-    .then(blob => {
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `invoice-${orderId}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    })
-    .catch(err => {
-      console.error(err);
-      alert(err.message);
-    });
-};
 
+    fetch(`http://127.0.0.1:8000/api/orders/${orderId}/invoice`, {
+      method: "GET",
+      headers: {
+        Accept: "application/pdf",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to download invoice");
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `invoice-${orderId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(err.message);
+      });
+  };
 
   return (
     <Container className="mt-5">
       <Row>
         <Col>
           <h3 className="mb-3">Order #{orderInfo.order_increment_id}</h3>
-          <p><b>Name:</b> {orderInfo.name}</p>
-          <p><b>Email:</b> {orderInfo.email}</p>
-          <p><b>Date:</b> {new Date(orderInfo.created_at).toLocaleDateString()}</p>
-          <p><b>Status:</b> {orderInfo.status || "Pending"}</p>
+          <p>
+            <b>Name:</b> {orderInfo.name}
+          </p>
+          <p>
+            <b>Email:</b> {orderInfo.email}
+          </p>
+          <p>
+            <b>Date:</b> {new Date(orderInfo.created_at).toLocaleDateString()}
+          </p>
+          <p>
+            <b>Status:</b> {orderInfo.status || "Pending"}
+          </p>
 
           <h5 className="mt-4">Items Ordered</h5>
           <Table striped bordered hover responsive>
@@ -112,21 +131,23 @@ const OrderDetails = () => {
               </tr>
             </thead>
             <tbody>
-              {orderItems.map(item => {
-                const options = item.custom_option ? JSON.parse(item.custom_option) : [];
+              {orderItems.map((item) => {
+                const options = item.custom_option
+                  ? JSON.parse(item.custom_option)
+                  : [];
                 return (
                   <tr key={item.id}>
                     <td>
-                     <Link to={`/product/${item.product.slug}`}>
-                     <Image
-                      src={`http://127.0.0.1:8000/uploads/product/${item.product.image}`}
-                       rounded
-                       style={{ width: "60px", cursor: "pointer" }}
-                       onError={(e) => (e.target.src = "/fallback.png")}
-                       />
-                        </Link>
-                       </td>
-                    
+                      <Link to={`/product/${item.product.slug}`}>
+                        <Image
+                          src={`http://127.0.0.1:8000/uploads/product/${item.product.image}`}
+                          rounded
+                          style={{ width: "60px", cursor: "pointer" }}
+                          onError={(e) => (e.target.src = "/fallback.png")}
+                        />
+                      </Link>
+                    </td>
+
                     <td>{item.product.name}</td>
                     <td>{item.qty}</td>
                     <td>₹{parseFloat(item.price).toFixed(2)}</td>
@@ -149,7 +170,8 @@ const OrderDetails = () => {
           </h5>
           {orderInfo.coupon && (
             <h5 className="text-end">
-              Coupon ({orderInfo.coupon}): -₹{parseFloat(orderInfo.coupon_discount).toFixed(2)}
+              Coupon ({orderInfo.coupon}): -₹
+              {parseFloat(orderInfo.coupon_discount).toFixed(2)}
             </h5>
           )}
           <h5 className="text-end">
@@ -160,11 +182,10 @@ const OrderDetails = () => {
           </h4>
 
           <div className="text-end mt-3">
-          <button className="btn btn-primary" onClick={downloadInvoice}>
-           Download Invoice
-          </button>
+            <button className="btn btn-primary" onClick={downloadInvoice}>
+              Download Invoice
+            </button>
           </div>
-
         </Col>
       </Row>
     </Container>

@@ -31,7 +31,6 @@ class CouponController extends Controller
         ]);
 
         Coupon::create($request->all());
-
         return redirect()->route('coupons.index')->with('success', 'Coupon created successfully.');
     }
 
@@ -57,7 +56,6 @@ class CouponController extends Controller
         ]);
 
         $coupon->update($request->all());
-
         return redirect()->route('coupons.index')->with('success', 'Coupon updated successfully.');
     }
 

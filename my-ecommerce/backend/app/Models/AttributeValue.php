@@ -19,17 +19,14 @@ class AttributeValue extends Model
         'status' => 'boolean',
     ];
 
-    // 🔁 Inverse of One-to-Many: Belongs to Attribute
     public function attribute()
     {
         return $this->belongsTo(Attribute::class);
     }
-
-
     public function products()
-{
-    return $this->belongsToMany(Product::class, 'attribute_product_value')
-                ->withTimestamps();
-}
+    {
+        return $this->belongsToMany(Product::class, 'attribute_product_value')
+            ->withTimestamps();
+    }
 
 }

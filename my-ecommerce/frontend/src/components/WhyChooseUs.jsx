@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const WhyChooseUs = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/blocks/why_choose_us')
+      .get("http://127.0.0.1:8000/api/blocks/why_choose_us")
       .then((res) => {
-        console.log('API response:', res.data);
+        console.log("API response:", res.data);
         setData(res.data);
       })
-      .catch((err) => console.error('API error:', err));
+      .catch((err) => console.error("API error:", err));
   }, []);
 
   if (!data) return <div>Loading...</div>;
@@ -31,9 +31,9 @@ const WhyChooseUs = () => {
                   alt={data.title}
                   className="img-fluid rounded h-100"
                   style={{
-                    width: '100%',
-                    maxHeight: '360px',
-                    objectFit: 'cover',
+                    width: "100%",
+                    maxHeight: "360px",
+                    objectFit: "cover",
                   }}
                 />
               ) : (

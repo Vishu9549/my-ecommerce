@@ -6,13 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+  
     public function up(): void
     {
         Schema::create('quotes_items', function (Blueprint $table) {
-            $table->id(); // bigint(20) unsigned NOT NULL AUTO_INCREMENT
+            $table->id();
             $table->unsignedBigInteger('quote_id');
             $table->unsignedBigInteger('product_id');
             $table->string('name')->nullable();
@@ -21,13 +19,10 @@ return new class extends Migration
             $table->integer('qty')->nullable()->comment('quantity');
             $table->decimal('row_total', 10, 2)->nullable();
             $table->string('custom_option')->nullable();
-            $table->timestamps(); // created_at, updated_at
+            $table->timestamps(); 
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('quotes_items');

@@ -20,7 +20,6 @@ class OrderItem extends Model
         'custom_option',
     ];
 
-    // Relations
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -30,5 +29,5 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    //
+
 }

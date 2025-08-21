@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
-    /**
-     * Show all wishlist items for logged-in user
-     */
     public function index()
     {
         $user = Auth::user();
@@ -22,9 +19,6 @@ class WishlistController extends Controller
         return response()->json($wishlist);
     }
 
-    /**
-     * Add product to wishlist
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -33,7 +27,6 @@ class WishlistController extends Controller
 
         $user = Auth::user();
 
-        // Check if already in wishlist
         $exists = Wishlist::where('user_id', $user->id)
             ->where('product_id', $request->product_id)
             ->exists();
@@ -53,9 +46,6 @@ class WishlistController extends Controller
         ], 201);
     }
 
-    /**
-     * Remove product from wishlist
-     */
     public function destroy($productId)
     {
         $user = Auth::user();

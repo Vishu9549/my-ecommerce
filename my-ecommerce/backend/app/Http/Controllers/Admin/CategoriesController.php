@@ -17,8 +17,8 @@ class CategoriesController extends Controller
 
     public function create()
     {
-        $categories = Categories::whereNull('parent_id')->get(); // For parent dropdown
-        $products = Product::all(); // If you need to show related products
+        $categories = Categories::whereNull('parent_id')->get();
+        $products = Product::all();
         return view('admin.categories.create', compact('categories', 'products'));
     }
 
@@ -26,24 +26,24 @@ class CategoriesController extends Controller
     {
         $validated = $request->validate([
             'parent_id' => 'nullable|integer|exists:categories,id',
-            'name'               => 'required|string|max:255',
-            'status'             => 'nullable|integer',
-            'show_in_menu'       => 'nullable|integer',
-            'short_description'  => 'nullable|string',
-            'description'        => 'nullable|string',
-            'url_key'            => 'nullable|string|max:255|unique:categories,url_key',
-            'meta_tag'           => 'nullable|string|max:255',
-            'meta_title'         => 'nullable|string|max:255',
-            'meta_description'   => 'nullable|string',
-            'products'           => 'nullable|array',
-            'products.*'         => 'exists:products,id',
+            'name' => 'required|string|max:255',
+            'status' => 'nullable|integer',
+            'show_in_menu' => 'nullable|integer',
+            'short_description' => 'nullable|string',
+            'description' => 'nullable|string',
+            'url_key' => 'nullable|string|max:255|unique:categories,url_key',
+            'meta_tag' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'products' => 'nullable|array',
+            'products.*' => 'exists:products,id',
         ]);
 
-       $category = Categories::create($validated);
+        $category = Categories::create($validated);
 
-         if ($request->has('products')) {
-        $category->products()->attach($request->products);
-    }
+        if ($request->has('products')) {
+            $category->products()->attach($request->products);
+        }
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
@@ -59,9 +59,9 @@ class CategoriesController extends Controller
         $category = Categories::findOrFail($id);
         $categories = Categories::whereNull('parent_id')->where('id', '!=', $id)->get();
         $products = Product::all();
-         $categoryProductIds = $category->products->pluck('id')->toArray();
+        $categoryProductIds = $category->products->pluck('id')->toArray();
 
-        return view('admin.categories.edit', compact('category', 'categories', 'products','categoryProductIds'));
+        return view('admin.categories.edit', compact('category', 'categories', 'products', 'categoryProductIds'));
     }
 
     public function update(Request $request, $id)
@@ -70,22 +70,21 @@ class CategoriesController extends Controller
 
         $validated = $request->validate([
             'parent_id' => 'nullable|integer|exists:categories,id',
-            'name'               => 'required|string|max:255',
-            'status'             => 'nullable|integer',
-            'show_in_menu'       => 'nullable|integer',
-            'short_description'  => 'nullable|string',
-            'description'        => 'nullable|string',
-            'url_key'            => 'nullable|string|max:255|unique:categories,url_key,' . $category->id,
-            'meta_tag'           => 'nullable|string|max:255',
-            'meta_title'         => 'nullable|string|max:255',
-            'meta_description'   => 'nullable|string',
-            'products'     => 'nullable|array',
-            'products.*'   => 'exists:products,id',
+            'name' => 'required|string|max:255',
+            'status' => 'nullable|integer',
+            'show_in_menu' => 'nullable|integer',
+            'short_description' => 'nullable|string',
+            'description' => 'nullable|string',
+            'url_key' => 'nullable|string|max:255|unique:categories,url_key,' . $category->id,
+            'meta_tag' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'products' => 'nullable|array',
+            'products.*' => 'exists:products,id',
         ]);
 
         $category->update($validated);
         $category->products()->sync($request->products ?? []);
-
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
@@ -93,7 +92,6 @@ class CategoriesController extends Controller
     {
         $category = Categories::findOrFail($id);
         $category->delete();
-
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

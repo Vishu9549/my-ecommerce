@@ -6,17 +6,12 @@ import HeroSection from "../components/HeroSection";
 const Services = () => {
   return (
     <>
-      {/* Start Hero Section */}
-        <HeroSection 
-  title="Welcome to Our Services Section" 
-  subtitle="Find Your Comfort" 
-  description="Discover stylish and affordable furniture for every room in your home." 
-  
-  
-/>
-      {/* End Hero Section */}
+      <HeroSection
+        title="Welcome to Our Services Section"
+        subtitle="Find Your Comfort"
+        description="Discover stylish and affordable furniture for every room in your home."
+      />
 
-      {/* Start Why Choose Us Section */}
       <div className="why-choose-section">
         <div className="container">
           <div className="row my-5">
@@ -57,7 +52,11 @@ const Services = () => {
               <div className="col-6 col-md-6 col-lg-3 mb-4" key={index}>
                 <div className="feature">
                   <div className="icon">
-                    <img src={`/images/${feature.img.split("/").pop()}`} alt="Icon" className="img-fluid" />
+                    <img
+                      src={`/images/${feature.img.split("/").pop()}`}
+                      alt="Icon"
+                      className="img-fluid"
+                    />
                   </div>
                   <h3>{feature.title}</h3>
                   <p>
@@ -70,9 +69,8 @@ const Services = () => {
           </div>
         </div>
       </div>
-      {/* End Why Choose Us Section */}
-      <ProductSection/>
-      <TestimonialSlider/>
+      <ProductSection />
+      <TestimonialSlider />
     </>
   );
 };

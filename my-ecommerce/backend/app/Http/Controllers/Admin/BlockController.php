@@ -44,7 +44,6 @@ class BlockController extends Controller
             }
         }
 
-        // Convert to JSON before inserting to DB
         $data['image'] = json_encode($imagePaths);
         $data['features'] = isset($data['features']) ? json_encode($data['features']) : null;
 
@@ -89,18 +88,14 @@ class BlockController extends Controller
         $mergedImages = array_merge($existingImages ?? [], $newImages);
         $data['image'] = json_encode($mergedImages);
         $data['features'] = isset($data['features']) ? json_encode($data['features']) : null;
-
         $block->update($data);
-
         return redirect()->route('blocks.index')->with('success', 'Block updated successfully.');
     }
 
     public function destroy($id)
     {
         $block = Block::findOrFail($id);
-
         $images = is_array($block->image) ? $block->image : json_decode($block->image, true);
-
         if ($images && is_array($images)) {
             foreach ($images as $img) {
                 $imagePath = public_path('uploads/blocks/' . $img);
@@ -111,7 +106,6 @@ class BlockController extends Controller
         }
 
         $block->delete();
-
         return redirect()->route('blocks.index')->with('success', 'Block deleted successfully.');
     }
 }

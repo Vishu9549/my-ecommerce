@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('coupon_code')->unique();
-            $table->boolean('status')->default(1); // 1 = Active, 0 = Inactive
+            $table->boolean('status')->default(1); 
             $table->date('valid_from')->nullable();
             $table->date('valid_to')->nullable();
             $table->decimal('discount_amount', 8, 2)->default(0.00);

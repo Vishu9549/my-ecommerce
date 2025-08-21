@@ -11,7 +11,6 @@ export default function AccountPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // ✅ User load on mount
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -31,27 +30,45 @@ export default function AccountPage() {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <div className="col-md-3 bg-success text-white p-4" style={{ minHeight: "100vh" }}>
-          <h4 className="mb-4">{user ? `Welcome, ${user.name}` : "Welcome, New User"}</h4>
+        <div
+          className="col-md-3 bg-success text-white p-4"
+          style={{ minHeight: "100vh" }}
+        >
+          <h4 className="mb-4">
+            {user ? `Welcome, ${user.name}` : "Welcome, New User"}
+          </h4>
           <div className="list-group">
-            <button className="list-group-item list-group-item-action" onClick={() => setActiveSection(user ? "profile" : "login")}>
+            <button
+              className="list-group-item list-group-item-action"
+              onClick={() => setActiveSection(user ? "profile" : "login")}
+            >
               Profile
             </button>
-            <button className="list-group-item list-group-item-action" onClick={() => setActiveSection("orders")}>
+            <button
+              className="list-group-item list-group-item-action"
+              onClick={() => setActiveSection("orders")}
+            >
               My Orders
             </button>
-            <button className="list-group-item list-group-item-action" onClick={() => setActiveSection("wishlist")}>
+            <button
+              className="list-group-item list-group-item-action"
+              onClick={() => setActiveSection("wishlist")}
+            >
               Wishlist
             </button>
-            <button className="list-group-item list-group-item-action text-danger" onClick={handleLogout}>
+            <button
+              className="list-group-item list-group-item-action text-danger"
+              onClick={handleLogout}
+            >
               Logout
             </button>
           </div>
         </div>
 
-        {/* Right content */}
-        <div className="col-md-9 p-4" style={{ minHeight: "100vh", overflowY: "auto" }}>
+        <div
+          className="col-md-9 p-4"
+          style={{ minHeight: "100vh", overflowY: "auto" }}
+        >
           {activeSection === "welcome" && (
             <Card className="p-4 shadow-sm">
               <h3>Welcome to Your Account</h3>
@@ -73,26 +90,34 @@ export default function AccountPage() {
           )}
 
           {activeSection === "profile" && user && (
-            <Card className="shadow-sm rounded-4 p-4" style={{ maxWidth: "500px", margin: "0 auto" }}>
+            <Card
+              className="shadow-sm rounded-4 p-4"
+              style={{ maxWidth: "500px", margin: "0 auto" }}
+            >
               <Card.Body>
                 <h3 className="text-center mb-4 fw-bold">Account Details</h3>
                 <Form
                   onSubmit={async (e) => {
                     e.preventDefault();
                     try {
-                      const res = await fetch("http://127.0.0.1:8000/api/user/update", {
-                        method: "PUT",
-                        headers: {
-                          "Content-Type": "application/json",
-                          Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                        body: JSON.stringify({
-                          name,
-                          email,
-                          password,
-                          password_confirmation: confirmPassword,
-                        }),
-                      });
+                      const res = await fetch(
+                        "http://127.0.0.1:8000/api/user/update",
+                        {
+                          method: "PUT",
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${localStorage.getItem(
+                              "token"
+                            )}`,
+                          },
+                          body: JSON.stringify({
+                            name,
+                            email,
+                            password,
+                            password_confirmation: confirmPassword,
+                          }),
+                        }
+                      );
                       const data = await res.json();
                       if (res.ok) {
                         alert("Profile updated successfully!");
@@ -107,19 +132,35 @@ export default function AccountPage() {
                 >
                   <Form.Group className="mb-3">
                     <Form.Label>Full Name</Form.Label>
-                    <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <Form.Control
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <Form.Control
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>New Password</Form.Label>
-                    <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
+                    <Form.Control
+                      type="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                    <Form.Control
+                      type="password"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
                   </Form.Group>
                   <Button type="submit" className="w-100">
                     Update
@@ -142,7 +183,6 @@ export default function AccountPage() {
   );
 }
 
-// ✅ Order List Component
 function OrderList() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
@@ -185,7 +225,10 @@ function OrderList() {
               <b>Order #{order.id}</b> - {order.status}
             </p>
             <p>Date: {new Date(order.created_at).toLocaleDateString()}</p>
-            <button className="btn btn-primary btn-sm" onClick={() => navigate(`/order-details/${order.id}`)}>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => navigate(`/order-details/${order.id}`)}
+            >
               View Details
             </button>
           </div>
@@ -195,7 +238,6 @@ function OrderList() {
   );
 }
 
-// ✅ Wishlist Component
 function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -234,7 +276,9 @@ function Wishlist() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    setWishlistItems((prev) => prev.filter((item) => item.product.id !== productId));
+    setWishlistItems((prev) =>
+      prev.filter((item) => item.product.id !== productId)
+    );
   }
 
   return (
@@ -259,7 +303,10 @@ function Wishlist() {
             <div className="card-body">
               <h5>{item.product.name}</h5>
               <p>₹{item.product.price}</p>
-              <button className="btn btn-danger btn-sm" onClick={() => removeFromWishlist(item.product.id)}>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => removeFromWishlist(item.product.id)}
+              >
                 Remove
               </button>
             </div>

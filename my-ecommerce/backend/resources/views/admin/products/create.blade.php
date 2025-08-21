@@ -6,7 +6,6 @@
         @csrf
 
         <div class="row">
-            <!-- Left Column -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     <label>Product Name</label>
@@ -77,8 +76,6 @@
                     <input type="text" name="url_key" class="form-control">
                 </div>
             </div>
-
-            <!-- Right Column -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
                     <label>Short Description</label>

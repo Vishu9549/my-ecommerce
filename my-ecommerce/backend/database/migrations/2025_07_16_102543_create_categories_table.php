@@ -9,26 +9,19 @@ return new class extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('parent_id')->nullable(); // For parent category
+            $table->unsignedBigInteger('parent_id')->nullable(); 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->boolean('show_in_menu')->default(false);
-
             $table->string('short_description')->nullable();
             $table->text('description')->nullable();
-
             $table->string('url_key')->unique();
             $table->string('meta_title')->nullable();
             $table->string('meta_tag')->nullable();
             $table->text('meta_description')->nullable();
-
-            $table->string('image')->nullable(); // image path
-
+            $table->string('image')->nullable(); 
             $table->timestamps();
-
-            // Foreign key for parent category
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('set null');
         });
     }

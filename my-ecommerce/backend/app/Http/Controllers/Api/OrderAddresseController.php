@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderAddresseController extends Controller
 {
-    // GET /api/order-addresses
     public function index()
     {
         $addresses = OrderAddresse::all();
         return response()->json($addresses);
     }
 
-    // POST /api/order-addresses
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -48,7 +46,6 @@ class OrderAddresseController extends Controller
         ], 201);
     }
 
-    // GET /api/order-addresses/{id}
     public function show($id)
     {
         $address = OrderAddresse::find($id);
@@ -60,7 +57,6 @@ class OrderAddresseController extends Controller
         return response()->json($address);
     }
 
-    // PUT /api/order-addresses/{id}
     public function update(Request $request, $id)
     {
         $address = OrderAddresse::find($id);
@@ -96,7 +92,6 @@ class OrderAddresseController extends Controller
         ]);
     }
 
-    // DELETE /api/order-addresses/{id}
     public function destroy($id)
     {
         $address = OrderAddresse::find($id);

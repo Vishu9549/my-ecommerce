@@ -22,7 +22,7 @@ class ProductController extends Controller
         $categories = Categories::all();
         $attributes = Attribute::with('values')->get();
         $allProducts = Product::all();
-        return view('admin.products.create', compact('categories', 'attributes' , 'allProducts'));
+        return view('admin.products.create', compact('categories', 'attributes', 'allProducts'));
     }
 
     public function store(Request $request)
@@ -51,36 +51,26 @@ class ProductController extends Controller
             'thumbnail_image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // ✅ Upload images
-      if ($request->hasFile('image')) {
-    $file = $request->file('image');
-    $filename = time() . '_' . $file->getClientOriginalName();
-    $file->move(public_path('uploads/product'), $filename);
-    $data['image'] = $filename;
-}
-
-
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/product'), $filename);
+            $data['image'] = $filename;
+        }
 
         if ($request->hasFile('thumbnail_image')) {
             $data['thumbnail_image'] = $request->file('thumbnail_image')->store('products', 'public');
         }
-
-        // ✅ Create Product
         $product = Product::create($data);
         $product->relatedProducts()->sync($request->input('related_products', []));
 
-
-
-        // ✅ Attach categories
         if ($request->has('categories')) {
             $product->categories()->attach($request->categories);
         }
 
-        // ✅ Attach attribute values
         if ($request->has('attribute_values')) {
             $product->attributeValues()->attach($request->attribute_values);
         }
-
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
@@ -89,25 +79,23 @@ class ProductController extends Controller
         $categories = Categories::all();
         $attributes = Attribute::with('values')->get();
         $allProducts = Product::all();
-        
+
         $selectedCategories = $product->categories->pluck('id')->toArray();
         $selectedAttributes = $product->attributeValues->pluck('id')->toArray();
 
-        return view('admin.products.edit', compact('product', 'categories', 'attributes', 'selectedCategories', 'selectedAttributes','allProducts'));
+        return view('admin.products.edit', compact('product', 'categories', 'attributes', 'selectedCategories', 'selectedAttributes', 'allProducts'));
     }
 
-    // File: app/Http/Controllers/Admin/ProductController.php
+    public function show($id)
+    {
+        $product = Product::with([
+            'categories',
+            'attributeValues.attribute',
+            'relatedProducts'
+        ])->findOrFail($id);
 
-public function show($id)
-{
-    $product = Product::with([
-        'categories',
-        'attributeValues.attribute',
-        'relatedProducts'
-    ])->findOrFail($id);
-
-    return view('admin.products.show', compact('product'));
-}
+        return view('admin.products.show', compact('product'));
+    }
 
 
     public function update(Request $request, Product $product)
@@ -136,13 +124,12 @@ public function show($id)
             'thumbnail_image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // ✅ Update images
-       if ($request->hasFile('image')) {
-    $file = $request->file('image');
-    $filename = time() . '_' . $file->getClientOriginalName();
-    $file->move(public_path('uploads/product'), $filename);
-   $data['image'] = $filename;
-}
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/product'), $filename);
+            $data['image'] = $filename;
+        }
 
 
         if ($request->hasFile('thumbnail_image')) {
@@ -155,9 +142,6 @@ public function show($id)
         $product->update($data);
         $product->relatedProducts()->sync($request->input('related_products', []));
 
-
-
-        // ✅ Sync categories and attribute values
         $product->categories()->sync($request->categories ?? []);
         $product->attributeValues()->sync($request->attribute_values ?? []);
 

@@ -11,8 +11,8 @@ class PageController extends Controller
     public function index()
     {
         $pages = Page::where('status', 1)
-            
-            ->select('id', 'title','url_key') // 👈 Change 'name' to 'title' or the correct column
+
+            ->select('id', 'title', 'url_key')
             ->get();
 
         return response()->json($pages);

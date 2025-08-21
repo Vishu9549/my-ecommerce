@@ -12,12 +12,12 @@ return new class extends Migration {
             $table->string('title', 255);
             $table->string('heading', 255);
             $table->integer('ordering')->default(0);
-            $table->string('identifier', 255)->nullable(); // for custom use like "wehelp", "whychooseus"
-            $table->integer('status')->default(1); // 1 = active, 0 = inactive
+            $table->string('identifier', 255)->nullable(); 
+            $table->integer('status')->default(1);
             $table->string('image', 255)->nullable();
             $table->string('image_1')->nullable();
             $table->string('image_2')->nullable();
-            $table->string('image_3')->nullable(); // optional main image
+            $table->string('image_3')->nullable(); 
             $table->json('features');
             $table->text('description')->nullable();
             $table->timestamps();

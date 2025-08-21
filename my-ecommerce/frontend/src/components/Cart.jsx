@@ -15,7 +15,7 @@ const Cart = () => {
     loading,
   } = useCart();
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -36,15 +36,15 @@ const Cart = () => {
 
     try {
       const response = await axios.post(
-  "http://localhost:8000/api/coupon/apply",
-  { coupon_code: couponCode },
-  {
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
-);
+        "http://localhost:8000/api/coupon/apply",
+        { coupon_code: couponCode },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = response.data;
 
@@ -171,7 +171,6 @@ const Cart = () => {
         )}
       </div>
 
-      {/* Total Section */}
       <div
         style={{
           marginTop: "30px",
@@ -189,7 +188,6 @@ const Cart = () => {
           <div>
             <strong>Subtotal:</strong> ₹{subtotal.toFixed(2)}
           </div>
-         
         </div>
 
         <button

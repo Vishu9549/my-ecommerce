@@ -19,10 +19,10 @@ class Coupon extends Model
     ];
 
 
-        public function quote()
-{
-    return $this->belongsTo(Quote::class, 'quote_id'); // or change foreign key if needed
-}
+    public function quote()
+    {
+        return $this->belongsTo(Quote::class, 'quote_id'); // or change foreign key if needed
+    }
 
 
 }

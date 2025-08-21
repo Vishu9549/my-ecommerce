@@ -12,18 +12,20 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\AttributeController;
-use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\WeHelpSectionController;
+use App\Http\Controllers\Admin\QuoteController;
+use App\Http\Controllers\Admin\QuoteItemController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::resource('user', UserController::class);
     Route::resource('pages', PageController::class);
     Route::resource('slider', SliderController::class);
@@ -34,11 +36,9 @@ Route::group(['prefix' => 'admin'], function(){
     Route::resource('products', ProductController::class);
     Route::resource('attributes', AttributeController::class);
     Route::resource('coupons', CouponController::class);
-    Route::resource('we-help', WeHelpSectionController::class);
     Route::apiResource('quotes', QuoteController::class);
     Route::apiResource('quote-items', QuoteItemController::class);
     Route::resource('order', OrderController::class);
     Route::resource('customers', CustomerController::class);
-    Route::get('/admin/orders/{id}/invoice', [OrderController::class, 'generateInvoice'])->name('admin.orders.invoice');
-
+    Route::get('orders/{id}/invoice', [OrderController::class, 'generateInvoice'])->name('admin.orders.invoice');
 });

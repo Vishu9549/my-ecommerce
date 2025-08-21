@@ -10,15 +10,28 @@ class Product extends Model
 {
     use HasFactory;
 
-   protected $fillable = [
-    'name', 'slug', 'status', 'is_featured', 'sku', 'qty',
-    'stock_status', 'weight', 'price', 'special_price',
-    'special_price_from', 'special_price_to', 'url_key',
-    'short_description', 'description', 'meta_tag',
-    'meta_title', 'meta_description', 'image', 'thumbnail_image'
-];
-
-
+    protected $fillable = [
+        'name',
+        'slug',
+        'status',
+        'is_featured',
+        'sku',
+        'qty',
+        'stock_status',
+        'weight',
+        'price',
+        'special_price',
+        'special_price_from',
+        'special_price_to',
+        'url_key',
+        'short_description',
+        'description',
+        'meta_tag',
+        'meta_title',
+        'meta_description',
+        'image',
+        'thumbnail_image'
+    ];
     protected static function booted()
     {
         static::creating(function ($product) {
@@ -28,39 +41,32 @@ class Product extends Model
         });
     }
 
-    // 🔁 Categories (many-to-many)
     public function categories()
     {
-        return $this->belongsToMany(categories::class,'categories_product', 'product_id', 'category_id');
+        return $this->belongsToMany(categories::class, 'categories_product', 'product_id', 'category_id');
     }
 
-    // 🎨 Attributes (many-to-many with pivot 'value')
     public function attributes()
     {
         return $this->belongsToMany(Attribute::class, 'product_attribute_value')
-                    ->withPivot('value');
+            ->withPivot('value');
     }
 
-   public function attributeValues()
-{
-    return $this->belongsToMany(AttributeValue::class, 'attribute_product_value')
-                ->with('attribute') // Include the Attribute name
-                ->withTimestamps();
-}
+    public function attributeValues()
+    {
+        return $this->belongsToMany(AttributeValue::class, 'attribute_product_value')
+            ->with('attribute')
+            ->withTimestamps();
+    }
 
-
-
-
-    // 🔄 Related Products
     public function relatedProducts()
     {
         return $this->belongsToMany(Product::class, 'product_related', 'product_id', 'related_product_id');
     }
 
-    // 🖼️ Image URL accessor
     public function getImageUrlAttribute()
-{
-    return $this->image ? url('uploads/product/' . $this->image) : null;
-}
+    {
+        return $this->image ? url('uploads/product/' . $this->image) : null;
+    }
 
 }

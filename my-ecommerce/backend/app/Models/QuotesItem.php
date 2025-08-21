@@ -9,7 +9,7 @@ class QuotesItem extends Model
 {
     use HasFactory;
 
-     protected $fillable = [
+    protected $fillable = [
         'quote_id',
         'product_id',
         'name',
@@ -18,19 +18,19 @@ class QuotesItem extends Model
         'qty',
         'row_total',
         'custom_option',
-    ]; 
-    
+    ];
+
     protected $casts = [
         'custom_option' => 'array',
     ];
 
     public function quote()
-{
-    return $this->belongsTo(Quote::class, 'quote_id'); // or change foreign key if needed
-}
-public function product()
-{
-    return $this->belongsTo(Product::class, 'product_id');
-}
+    {
+        return $this->belongsTo(Quote::class, 'quote_id');
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 
 }

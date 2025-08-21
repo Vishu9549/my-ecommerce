@@ -30,14 +30,13 @@ class Order extends Model
     ];
 
     public function items()
-{
-    return $this->hasMany(OrderItem::class); 
-    // adjust OrderItem::class to your actual order item model
-}
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 
-public function addresses()
-{
-    return $this->hasMany(OrderAddresse::class, 'order_id');
-}
+    public function addresses()
+    {
+        return $this->hasMany(OrderAddresse::class, 'order_id');
+    }
 
 }
